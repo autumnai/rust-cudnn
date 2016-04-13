@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `cudnn` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, cudnn">
+
+    <title>cudnn - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'cudnn', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>cudnn</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-0' class='srclink' href='../src/cudnn/src/lib.rs.html#1-91' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Provides a safe and convenient wrapper for the <a href="https://developer.nvidia.com/cudnn">CUDA cuDNN</a> API.</p>
+
+<p>This crate (1.0.0) was developed against cuDNN v3.</p>
+
+<h2 id='architecture' class='section-header'><a href='#architecture'>Architecture</a></h2>
+<p>This crate provides three levels of entrace.</p>
+
+<p><strong>FFI</strong><br>
+The <code>ffi</code> module exposes the foreign function interface and cuDNN specific types. Usually,
+there should be no use to touch it if you only want to use cuDNN in you application. The ffi
+is provided by the <code>rust-cudnn-sys</code> crate and gets reexported here.</p>
+
+<p><strong>Low-Level</strong><br>
+The <code>api</code> module exposes already a complete and safe wrapper for the cuDNN API, including proper
+Rust Errors. Usually there should be not need to use the <code>API</code> directly though, as the <code>Cudnn</code> module,
+as described in the next block, provides all the API functionality but provides a more convenient interface.</p>
+
+<p><strong>High-Level</strong><br>
+The <code>cudnn</code> module exposes the <code>Cudnn</code> struct, which provides a very convenient, easy-to-understand interface
+for the cuDNN API. There should be not much need to obtain and read the cuDNN manual. Initialize the Cudnn
+struct and you can call the available methods wich are representing all the available cuDNN operations.</p>
+
+<h2 id='examples' class='section-header'><a href='#examples'>Examples</a></h2>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>cudnn</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
+<span class='kw'>use</span> <span class='ident'>cudnn</span>::{<span class='ident'>Cudnn</span>, <span class='ident'>TensorDescriptor</span>};
+<span class='kw'>use</span> <span class='ident'>cudnn</span>::<span class='ident'>utils</span>::{<span class='ident'>ScalParams</span>, <span class='ident'>DataType</span>};
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='comment'>// Initialize a new cuDNN context and allocates resources.</span>
+    <span class='kw'>let</span> <span class='ident'>cudnn</span> <span class='op'>=</span> <span class='ident'>Cudnn</span>::<span class='ident'>new</span>().<span class='ident'>unwrap</span>();
+    <span class='comment'>// Create a cuDNN Tensor Descriptor for `src` and `dest` memory.</span>
+    <span class='kw'>let</span> <span class='ident'>src_desc</span> <span class='op'>=</span> <span class='ident'>TensorDescriptor</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span>[<span class='number'>2</span>, <span class='number'>2</span>, <span class='number'>2</span>], <span class='kw-2'>&amp;</span>[<span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>1</span>], <span class='ident'>DataType</span>::<span class='ident'>Float</span>).<span class='ident'>unwrap</span>();
+    <span class='kw'>let</span> <span class='ident'>dest_desc</span> <span class='op'>=</span> <span class='ident'>TensorDescriptor</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span>[<span class='number'>2</span>, <span class='number'>2</span>, <span class='number'>2</span>], <span class='kw-2'>&amp;</span>[<span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>1</span>], <span class='ident'>DataType</span>::<span class='ident'>Float</span>).<span class='ident'>unwrap</span>();
+    <span class='comment'>// Obtain the `src` and memory pointer on the GPU.</span>
+    <span class='comment'>// NOTE: You wouldn&#39;t do it like that. You need to really allocate memory on the GPU with e.g. CUDA or Collenchyma.</span>
+    <span class='kw'>let</span> <span class='ident'>src_data</span>: <span class='op'>*</span><span class='kw'>const</span> ::<span class='ident'>libc</span>::<span class='ident'>c_void</span> <span class='op'>=</span> ::<span class='ident'>std</span>::<span class='ident'>ptr</span>::<span class='ident'>null</span>();
+    <span class='kw'>let</span> <span class='ident'>dest_data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> ::<span class='ident'>libc</span>::<span class='ident'>c_void</span> <span class='op'>=</span> ::<span class='ident'>std</span>::<span class='ident'>ptr</span>::<span class='ident'>null_mut</span>();
+    <span class='comment'>// Now you can compute the forward sigmoid activation on your GPU.</span>
+    <span class='ident'>cudnn</span>.<span class='ident'>sigmoid_forward</span>::<span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='ident'>src_desc</span>, <span class='ident'>src_data</span>, <span class='kw-2'>&amp;</span><span class='ident'>dest_desc</span>, <span class='ident'>dest_data</span>, <span class='ident'>ScalParams</span>::<span class='ident'>default</span>());
+}</pre>
+
+<h2 id='notes' class='section-header'><a href='#notes'>Notes</a></h2>
+<p>rust-cudnn was developed at <a href="http://autumnai.com">Autumn</a> for the Rust Machine Intelligence Framework <a href="https://github.com/autumnai/leaf">Leaf</a>.</p>
+
+<p>rust-cudnn is part of the High-Performance Computation Framework <a href="https://github.com/autumnai/collenchyma">Collenchyma</a>, for the
+<a href="https://github.com/autumnai/collenchyma-nn">Neural Network Plugin</a>. For an easy, unified interface for NN operations, such as those provided by
+cuDNN, you might check out <a href="https://github.com/autumnai/collenchyma">Collenchyma</a>.</p>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use <a class='mod' href='../cudnn_sys/index.html' title='cudnn_sys'>ffi</a>::*;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='utils/index.html'
+                               title='cudnn::utils'>utils</a></td>
+                        <td class='docblock short'>
+                             <p>Describes utility functionality for CUDA cuDNN.</p>
+                        </td>
+                    </tr>
+                </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.API.html'
+                               title='cudnn::API'>API</a></td>
+                        <td class='docblock short'>
+                             <p>Defines the Cuda cuDNN API.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.ConvolutionDescriptor.html'
+                               title='cudnn::ConvolutionDescriptor'>ConvolutionDescriptor</a></td>
+                        <td class='docblock short'>
+                             <p>Describes a Convolution Descriptor.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Cudnn.html'
+                               title='cudnn::Cudnn'>Cudnn</a></td>
+                        <td class='docblock short'>
+                             <p>Provides a the high-level interface to CUDA&#39;s cuDNN.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.FilterDescriptor.html'
+                               title='cudnn::FilterDescriptor'>FilterDescriptor</a></td>
+                        <td class='docblock short'>
+                             <p>Describes a Filter Descriptor.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.NormalizationDescriptor.html'
+                               title='cudnn::NormalizationDescriptor'>NormalizationDescriptor</a></td>
+                        <td class='docblock short'>
+                             <p>Describes a LRN Descriptor.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.PoolingDescriptor.html'
+                               title='cudnn::PoolingDescriptor'>PoolingDescriptor</a></td>
+                        <td class='docblock short'>
+                             <p>Describes a Pooling Descriptor.</p>
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.TensorDescriptor.html'
+                               title='cudnn::TensorDescriptor'>TensorDescriptor</a></td>
+                        <td class='docblock short'>
+                             <p>Describes a TensorDescriptor.</p>
+                        </td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Error.html'
+                               title='cudnn::Error'>Error</a></td>
+                        <td class='docblock short'>
+                             <p>Defines CUDA&#39;s cuDNN errors.</p>
+                        </td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "cudnn";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

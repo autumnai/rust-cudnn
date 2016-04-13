@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TensorDescriptor","Describes a TensorDescriptor."]]});

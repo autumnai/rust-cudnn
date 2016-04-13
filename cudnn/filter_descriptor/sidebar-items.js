@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FilterDescriptor","Describes a Filter Descriptor."]]});

@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `cudnn_sys` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, cudnn_sys">
+
+    <title>cudnn_sys - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'cudnn_sys', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>cudnn_sys</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-0' class='srclink' href='../src/cudnn_sys/lib.rs.html#1-891' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Defines the Foreign Function Interface for the CUDA cuDNN API.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Struct_Unnamed14.html'
+                               title='cudnn_sys::Struct_Unnamed14'>Struct_Unnamed14</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Struct_Unnamed17.html'
+                               title='cudnn_sys::Struct_Unnamed17'>Struct_Unnamed17</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Struct_Unnamed20.html'
+                               title='cudnn_sys::Struct_Unnamed20'>Struct_Unnamed20</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.MemcpyKind.html'
+                               title='cudnn_sys::MemcpyKind'>MemcpyKind</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_CUstream_st.html'
+                               title='cudnn_sys::Struct_CUstream_st'>Struct_CUstream_st</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_cudnnContext.html'
+                               title='cudnn_sys::Struct_cudnnContext'>Struct_cudnnContext</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_cudnnConvolutionStruct.html'
+                               title='cudnn_sys::Struct_cudnnConvolutionStruct'>Struct_cudnnConvolutionStruct</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_cudnnFilterStruct.html'
+                               title='cudnn_sys::Struct_cudnnFilterStruct'>Struct_cudnnFilterStruct</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_cudnnLRNStruct.html'
+                               title='cudnn_sys::Struct_cudnnLRNStruct'>Struct_cudnnLRNStruct</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_cudnnPoolingStruct.html'
+                               title='cudnn_sys::Struct_cudnnPoolingStruct'>Struct_cudnnPoolingStruct</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.Struct_cudnnTensorStruct.html'
+                               title='cudnn_sys::Struct_cudnnTensorStruct'>Struct_cudnnTensorStruct</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnActivationMode_t.html'
+                               title='cudnn_sys::cudnnActivationMode_t'>cudnnActivationMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnAddMode_t.html'
+                               title='cudnn_sys::cudnnAddMode_t'>cudnnAddMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionBwdDataAlgo_t.html'
+                               title='cudnn_sys::cudnnConvolutionBwdDataAlgo_t'>cudnnConvolutionBwdDataAlgo_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionBwdDataPreference_t.html'
+                               title='cudnn_sys::cudnnConvolutionBwdDataPreference_t'>cudnnConvolutionBwdDataPreference_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionBwdFilterAlgo_t.html'
+                               title='cudnn_sys::cudnnConvolutionBwdFilterAlgo_t'>cudnnConvolutionBwdFilterAlgo_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionBwdFilterPreference_t.html'
+                               title='cudnn_sys::cudnnConvolutionBwdFilterPreference_t'>cudnnConvolutionBwdFilterPreference_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionFwdAlgo_t.html'
+                               title='cudnn_sys::cudnnConvolutionFwdAlgo_t'>cudnnConvolutionFwdAlgo_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionFwdPreference_t.html'
+                               title='cudnn_sys::cudnnConvolutionFwdPreference_t'>cudnnConvolutionFwdPreference_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnConvolutionMode_t.html'
+                               title='cudnn_sys::cudnnConvolutionMode_t'>cudnnConvolutionMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnDataType_t.html'
+                               title='cudnn_sys::cudnnDataType_t'>cudnnDataType_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnPoolingMode_t.html'
+                               title='cudnn_sys::cudnnPoolingMode_t'>cudnnPoolingMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnSoftmaxAlgorithm_t.html'
+                               title='cudnn_sys::cudnnSoftmaxAlgorithm_t'>cudnnSoftmaxAlgorithm_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnSoftmaxMode_t.html'
+                               title='cudnn_sys::cudnnSoftmaxMode_t'>cudnnSoftmaxMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnStatus_t.html'
+                               title='cudnn_sys::cudnnStatus_t'>cudnnStatus_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.cudnnTensorFormat_t.html'
+                               title='cudnn_sys::cudnnTensorFormat_t'>cudnnTensorFormat_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CUDNN_DIVNORM_PRECOMPUTED_MEANS.html'
+                               title='cudnn_sys::CUDNN_DIVNORM_PRECOMPUTED_MEANS'>CUDNN_DIVNORM_PRECOMPUTED_MEANS</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CUDNN_LRN_CROSS_CHANNEL_DIM1.html'
+                               title='cudnn_sys::CUDNN_LRN_CROSS_CHANNEL_DIM1'>CUDNN_LRN_CROSS_CHANNEL_DIM1</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnActivationBackward.html'
+                               title='cudnn_sys::cudnnActivationBackward'>cudnnActivationBackward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnActivationForward.html'
+                               title='cudnn_sys::cudnnActivationForward'>cudnnActivationForward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnAddTensor.html'
+                               title='cudnn_sys::cudnnAddTensor'>cudnnAddTensor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnAddTensor_v3.html'
+                               title='cudnn_sys::cudnnAddTensor_v3'>cudnnAddTensor_v3</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnConvolutionBackwardBias.html'
+                               title='cudnn_sys::cudnnConvolutionBackwardBias'>cudnnConvolutionBackwardBias</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnConvolutionBackwardData.html'
+                               title='cudnn_sys::cudnnConvolutionBackwardData'>cudnnConvolutionBackwardData</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnConvolutionBackwardData_v3.html'
+                               title='cudnn_sys::cudnnConvolutionBackwardData_v3'>cudnnConvolutionBackwardData_v3</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnConvolutionBackwardFilter.html'
+                               title='cudnn_sys::cudnnConvolutionBackwardFilter'>cudnnConvolutionBackwardFilter</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnConvolutionBackwardFilter_v3.html'
+                               title='cudnn_sys::cudnnConvolutionBackwardFilter_v3'>cudnnConvolutionBackwardFilter_v3</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnConvolutionForward.html'
+                               title='cudnn_sys::cudnnConvolutionForward'>cudnnConvolutionForward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnCreate.html'
+                               title='cudnn_sys::cudnnCreate'>cudnnCreate</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnCreateConvolutionDescriptor.html'
+                               title='cudnn_sys::cudnnCreateConvolutionDescriptor'>cudnnCreateConvolutionDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnCreateFilterDescriptor.html'
+                               title='cudnn_sys::cudnnCreateFilterDescriptor'>cudnnCreateFilterDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnCreateLRNDescriptor.html'
+                               title='cudnn_sys::cudnnCreateLRNDescriptor'>cudnnCreateLRNDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnCreatePoolingDescriptor.html'
+                               title='cudnn_sys::cudnnCreatePoolingDescriptor'>cudnnCreatePoolingDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnCreateTensorDescriptor.html'
+                               title='cudnn_sys::cudnnCreateTensorDescriptor'>cudnnCreateTensorDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDestroy.html'
+                               title='cudnn_sys::cudnnDestroy'>cudnnDestroy</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDestroyConvolutionDescriptor.html'
+                               title='cudnn_sys::cudnnDestroyConvolutionDescriptor'>cudnnDestroyConvolutionDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDestroyFilterDescriptor.html'
+                               title='cudnn_sys::cudnnDestroyFilterDescriptor'>cudnnDestroyFilterDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDestroyLRNDescriptor.html'
+                               title='cudnn_sys::cudnnDestroyLRNDescriptor'>cudnnDestroyLRNDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDestroyPoolingDescriptor.html'
+                               title='cudnn_sys::cudnnDestroyPoolingDescriptor'>cudnnDestroyPoolingDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDestroyTensorDescriptor.html'
+                               title='cudnn_sys::cudnnDestroyTensorDescriptor'>cudnnDestroyTensorDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDivisiveNormalizationBackward.html'
+                               title='cudnn_sys::cudnnDivisiveNormalizationBackward'>cudnnDivisiveNormalizationBackward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnDivisiveNormalizationForward.html'
+                               title='cudnn_sys::cudnnDivisiveNormalizationForward'>cudnnDivisiveNormalizationForward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnFindConvolutionBackwardDataAlgorithm.html'
+                               title='cudnn_sys::cudnnFindConvolutionBackwardDataAlgorithm'>cudnnFindConvolutionBackwardDataAlgorithm</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnFindConvolutionBackwardFilterAlgorithm.html'
+                               title='cudnn_sys::cudnnFindConvolutionBackwardFilterAlgorithm'>cudnnFindConvolutionBackwardFilterAlgorithm</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnFindConvolutionForwardAlgorithm.html'
+                               title='cudnn_sys::cudnnFindConvolutionForwardAlgorithm'>cudnnFindConvolutionForwardAlgorithm</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolution2dDescriptor.html'
+                               title='cudnn_sys::cudnnGetConvolution2dDescriptor'>cudnnGetConvolution2dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolution2dForwardOutputDim.html'
+                               title='cudnn_sys::cudnnGetConvolution2dForwardOutputDim'>cudnnGetConvolution2dForwardOutputDim</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionBackwardDataAlgorithm.html'
+                               title='cudnn_sys::cudnnGetConvolutionBackwardDataAlgorithm'>cudnnGetConvolutionBackwardDataAlgorithm</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionBackwardDataWorkspaceSize.html'
+                               title='cudnn_sys::cudnnGetConvolutionBackwardDataWorkspaceSize'>cudnnGetConvolutionBackwardDataWorkspaceSize</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionBackwardFilterAlgorithm.html'
+                               title='cudnn_sys::cudnnGetConvolutionBackwardFilterAlgorithm'>cudnnGetConvolutionBackwardFilterAlgorithm</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionBackwardFilterWorkspaceSize.html'
+                               title='cudnn_sys::cudnnGetConvolutionBackwardFilterWorkspaceSize'>cudnnGetConvolutionBackwardFilterWorkspaceSize</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionForwardAlgorithm.html'
+                               title='cudnn_sys::cudnnGetConvolutionForwardAlgorithm'>cudnnGetConvolutionForwardAlgorithm</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionForwardWorkspaceSize.html'
+                               title='cudnn_sys::cudnnGetConvolutionForwardWorkspaceSize'>cudnnGetConvolutionForwardWorkspaceSize</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionNdDescriptor.html'
+                               title='cudnn_sys::cudnnGetConvolutionNdDescriptor'>cudnnGetConvolutionNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionNdDescriptor_v3.html'
+                               title='cudnn_sys::cudnnGetConvolutionNdDescriptor_v3'>cudnnGetConvolutionNdDescriptor_v3</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetConvolutionNdForwardOutputDim.html'
+                               title='cudnn_sys::cudnnGetConvolutionNdForwardOutputDim'>cudnnGetConvolutionNdForwardOutputDim</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetErrorString.html'
+                               title='cudnn_sys::cudnnGetErrorString'>cudnnGetErrorString</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetFilter4dDescriptor.html'
+                               title='cudnn_sys::cudnnGetFilter4dDescriptor'>cudnnGetFilter4dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetFilterNdDescriptor.html'
+                               title='cudnn_sys::cudnnGetFilterNdDescriptor'>cudnnGetFilterNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetLRNDescriptor.html'
+                               title='cudnn_sys::cudnnGetLRNDescriptor'>cudnnGetLRNDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetPooling2dDescriptor.html'
+                               title='cudnn_sys::cudnnGetPooling2dDescriptor'>cudnnGetPooling2dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetPooling2dForwardOutputDim.html'
+                               title='cudnn_sys::cudnnGetPooling2dForwardOutputDim'>cudnnGetPooling2dForwardOutputDim</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetPoolingNdDescriptor.html'
+                               title='cudnn_sys::cudnnGetPoolingNdDescriptor'>cudnnGetPoolingNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetPoolingNdForwardOutputDim.html'
+                               title='cudnn_sys::cudnnGetPoolingNdForwardOutputDim'>cudnnGetPoolingNdForwardOutputDim</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetStream.html'
+                               title='cudnn_sys::cudnnGetStream'>cudnnGetStream</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetTensor4dDescriptor.html'
+                               title='cudnn_sys::cudnnGetTensor4dDescriptor'>cudnnGetTensor4dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetTensorNdDescriptor.html'
+                               title='cudnn_sys::cudnnGetTensorNdDescriptor'>cudnnGetTensorNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnGetVersion.html'
+                               title='cudnn_sys::cudnnGetVersion'>cudnnGetVersion</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnIm2Col.html'
+                               title='cudnn_sys::cudnnIm2Col'>cudnnIm2Col</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnLRNCrossChannelBackward.html'
+                               title='cudnn_sys::cudnnLRNCrossChannelBackward'>cudnnLRNCrossChannelBackward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnLRNCrossChannelForward.html'
+                               title='cudnn_sys::cudnnLRNCrossChannelForward'>cudnnLRNCrossChannelForward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnPoolingBackward.html'
+                               title='cudnn_sys::cudnnPoolingBackward'>cudnnPoolingBackward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnPoolingForward.html'
+                               title='cudnn_sys::cudnnPoolingForward'>cudnnPoolingForward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnScaleTensor.html'
+                               title='cudnn_sys::cudnnScaleTensor'>cudnnScaleTensor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetConvolution2dDescriptor.html'
+                               title='cudnn_sys::cudnnSetConvolution2dDescriptor'>cudnnSetConvolution2dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetConvolutionNdDescriptor.html'
+                               title='cudnn_sys::cudnnSetConvolutionNdDescriptor'>cudnnSetConvolutionNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetConvolutionNdDescriptor_v3.html'
+                               title='cudnn_sys::cudnnSetConvolutionNdDescriptor_v3'>cudnnSetConvolutionNdDescriptor_v3</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetFilter4dDescriptor.html'
+                               title='cudnn_sys::cudnnSetFilter4dDescriptor'>cudnnSetFilter4dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetFilterNdDescriptor.html'
+                               title='cudnn_sys::cudnnSetFilterNdDescriptor'>cudnnSetFilterNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetLRNDescriptor.html'
+                               title='cudnn_sys::cudnnSetLRNDescriptor'>cudnnSetLRNDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetPooling2dDescriptor.html'
+                               title='cudnn_sys::cudnnSetPooling2dDescriptor'>cudnnSetPooling2dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetPoolingNdDescriptor.html'
+                               title='cudnn_sys::cudnnSetPoolingNdDescriptor'>cudnnSetPoolingNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetStream.html'
+                               title='cudnn_sys::cudnnSetStream'>cudnnSetStream</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetTensor.html'
+                               title='cudnn_sys::cudnnSetTensor'>cudnnSetTensor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetTensor4dDescriptor.html'
+                               title='cudnn_sys::cudnnSetTensor4dDescriptor'>cudnnSetTensor4dDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetTensor4dDescriptorEx.html'
+                               title='cudnn_sys::cudnnSetTensor4dDescriptorEx'>cudnnSetTensor4dDescriptorEx</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSetTensorNdDescriptor.html'
+                               title='cudnn_sys::cudnnSetTensorNdDescriptor'>cudnnSetTensorNdDescriptor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSoftmaxBackward.html'
+                               title='cudnn_sys::cudnnSoftmaxBackward'>cudnnSoftmaxBackward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnSoftmaxForward.html'
+                               title='cudnn_sys::cudnnSoftmaxForward'>cudnnSoftmaxForward</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.cudnnTransformTensor.html'
+                               title='cudnn_sys::cudnnTransformTensor'>cudnnTransformTensor</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Enum_Unnamed25.html'
+                               title='cudnn_sys::Enum_Unnamed25'>Enum_Unnamed25</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Enum_Unnamed26.html'
+                               title='cudnn_sys::Enum_Unnamed26'>Enum_Unnamed26</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Enum_cudaError.html'
+                               title='cudnn_sys::Enum_cudaError'>Enum_cudaError</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Enum_cudaMemcpyKind.html'
+                               title='cudnn_sys::Enum_cudaMemcpyKind'>Enum_cudaMemcpyKind</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudaError_t.html'
+                               title='cudnn_sys::cudaError_t'>cudaError_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudaMemoryPtr.html'
+                               title='cudnn_sys::cudaMemoryPtr'>cudaMemoryPtr</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudaStream_t.html'
+                               title='cudnn_sys::cudaStream_t'>cudaStream_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnConvolutionBwdDataAlgoPerf_t.html'
+                               title='cudnn_sys::cudnnConvolutionBwdDataAlgoPerf_t'>cudnnConvolutionBwdDataAlgoPerf_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnConvolutionBwdFilterAlgoPerf_t.html'
+                               title='cudnn_sys::cudnnConvolutionBwdFilterAlgoPerf_t'>cudnnConvolutionBwdFilterAlgoPerf_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnConvolutionDescriptor_t.html'
+                               title='cudnn_sys::cudnnConvolutionDescriptor_t'>cudnnConvolutionDescriptor_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnConvolutionFwdAlgoPerf_t.html'
+                               title='cudnn_sys::cudnnConvolutionFwdAlgoPerf_t'>cudnnConvolutionFwdAlgoPerf_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnDivNormMode_t.html'
+                               title='cudnn_sys::cudnnDivNormMode_t'>cudnnDivNormMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnFilterDescriptor_t.html'
+                               title='cudnn_sys::cudnnFilterDescriptor_t'>cudnnFilterDescriptor_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnHandle_t.html'
+                               title='cudnn_sys::cudnnHandle_t'>cudnnHandle_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnLRNDescriptor_t.html'
+                               title='cudnn_sys::cudnnLRNDescriptor_t'>cudnnLRNDescriptor_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnLRNMode_t.html'
+                               title='cudnn_sys::cudnnLRNMode_t'>cudnnLRNMode_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnPoolingDescriptor_t.html'
+                               title='cudnn_sys::cudnnPoolingDescriptor_t'>cudnnPoolingDescriptor_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.cudnnTensorDescriptor_t.html'
+                               title='cudnn_sys::cudnnTensorDescriptor_t'>cudnnTensorDescriptor_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.size_t.html'
+                               title='cudnn_sys::size_t'>size_t</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "cudnn_sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

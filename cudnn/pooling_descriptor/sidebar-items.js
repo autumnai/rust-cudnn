@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PoolingDescriptor","Describes a Pooling Descriptor."]]});

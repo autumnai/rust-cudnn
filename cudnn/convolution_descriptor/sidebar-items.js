@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ConvolutionDescriptor","Describes a Convolution Descriptor."]]});
