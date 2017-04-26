@@ -5,7 +5,10 @@
 //! stores the handle and manages future calls.
 
 use super::*;
-use super::utils::{ConvolutionConfig, NormalizationConfig, PoolingConfig, ScalParams};
+use super::utils::{ConvolutionConfig, DataTypeInfo,
+                   NormalizationConfig, PoolingConfig, ActivationConfig, ScalParams};
+use num::traits::Float;
+use std::mem::transmute_copy;
 
 #[derive(Debug, Clone)]
 /// Provides a the high-level interface to CUDA's cuDNN.
@@ -99,22 +102,36 @@ impl Cudnn {
         Ok(PoolingConfig::new(avg, max))
     }
 
+    /// Initializes the parameters and configurations for running CUDA cuDNN Activation operations.
+    pub fn init_activation(
+        &self,
+        ) -> Result<ActivationConfig, Error> {
+        let sigmoid = try!(ActivationDescriptor::new(cudnnActivationMode_t::CUDNN_ACTIVATION_SIGMOID));
+        let relu = try!(ActivationDescriptor::new(cudnnActivationMode_t::CUDNN_ACTIVATION_RELU));
+        let clipped_relu = try!(ActivationDescriptor::new(cudnnActivationMode_t::CUDNN_ACTIVATION_CLIPPED_RELU));
+        let tanh = try!(ActivationDescriptor::new(cudnnActivationMode_t::CUDNN_ACTIVATION_TANH));
+        Ok(ActivationConfig::new(sigmoid, relu, clipped_relu, tanh))
+    }
+
     /// Computes the forward Sigmoid Activation function.
     ///
     /// Writes the result of the computation to `dest_data`.
     pub fn sigmoid_forward<T>(
         &self,
+        activation_conf: &ActivationConfig,
         src_desc: &TensorDescriptor,
         src_data: *const ::libc::c_void,
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::activation_forward(
             *self.id_c(),
-            cudnnActivationMode_t::CUDNN_ACTIVATION_SIGMOID,
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            *activation_conf.activation_sigmoid_desc().id_c(),
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -123,6 +140,7 @@ impl Cudnn {
     /// Writes the result of the computation to `dest_diff_data`.
     pub fn sigmoid_backward<T>(
         &self,
+        activation_conf: &ActivationConfig,
         src_desc: &TensorDescriptor,
         src_data: *const ::libc::c_void,
         src_diff_desc: &TensorDescriptor,
@@ -132,12 +150,16 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::activation_backward(
             *self.id_c(),
-            cudnnActivationMode_t::CUDNN_ACTIVATION_SIGMOID,
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
+            *activation_conf.activation_sigmoid_desc().id_c(),
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) },
+            *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -146,17 +168,20 @@ impl Cudnn {
     /// Writes the result of the computation to `dest_data`.
     pub fn relu_forward<T>(
         &self,
+        activation_conf: &ActivationConfig,
         src_desc: &TensorDescriptor,
         src_data: *const ::libc::c_void,
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::activation_forward(
             *self.id_c(),
-            cudnnActivationMode_t::CUDNN_ACTIVATION_RELU,
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            *activation_conf.activation_relu_desc().id_c(),
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -165,6 +190,7 @@ impl Cudnn {
     /// Writes the result of the computation to `dest_diff_data`.
     pub fn relu_backward<T>(
         &self,
+        activation_conf: &ActivationConfig,
         src_desc: &TensorDescriptor,
         src_data: *const ::libc::c_void,
         src_diff_desc: &TensorDescriptor,
@@ -174,12 +200,16 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::activation_backward(
             *self.id_c(),
-            cudnnActivationMode_t::CUDNN_ACTIVATION_RELU,
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
+            *activation_conf.activation_relu_desc().id_c(),
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) },
+            *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -188,17 +218,20 @@ impl Cudnn {
     /// Writes the result of the computation to `dest_data`.
     pub fn tanh_forward<T>(
         &self,
+        activation_conf: &ActivationConfig,
         src_desc: &TensorDescriptor,
         src_data: *const ::libc::c_void,
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::activation_forward(
             *self.id_c(),
-            cudnnActivationMode_t::CUDNN_ACTIVATION_TANH,
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            *activation_conf.activation_tanh_desc().id_c(),
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -207,6 +240,7 @@ impl Cudnn {
     /// Writes the result of the computation to `dest_diff_data`.
     pub fn tanh_backward<T>(
         &self,
+        activation_conf: &ActivationConfig,
         src_desc: &TensorDescriptor,
         src_data: *const ::libc::c_void,
         src_diff_desc: &TensorDescriptor,
@@ -216,12 +250,16 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::activation_backward(
             *self.id_c(),
-            cudnnActivationMode_t::CUDNN_ACTIVATION_TANH,
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
+            *activation_conf.activation_tanh_desc().id_c(),
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) },
+            *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -238,12 +276,15 @@ impl Cudnn {
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::convolution_forward(
             *self.id_c(),
             *conv_config.forward_algo(), *conv_config.conv_desc().id_c(), workspace, *conv_config.forward_workspace_size(),
-            scale.a, *src_desc.id_c(), src_data, *conv_config.filter_desc().id_c(), filter_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *conv_config.filter_desc().id_c(), filter_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -257,11 +298,14 @@ impl Cudnn {
         bias_grad_desc: &TensorDescriptor,
         bias_grad_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::convolution_backward_bias(
             *self.id_c(),
-            scale.a, *dest_grad_desc.id_c(), dest_grad_data,
-            scale.b, *bias_grad_desc.id_c(), bias_grad_data
+            unsafe { transmute_copy(&&scale.a) },
+            *dest_grad_desc.id_c(), dest_grad_data,
+            unsafe { transmute_copy(&&scale.b) }, *bias_grad_desc.id_c(), bias_grad_data
         )
     }
 
@@ -278,12 +322,15 @@ impl Cudnn {
         dest_grad_data: *const ::libc::c_void,
         filter_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::convolution_backward_filter(
             *self.id_c(),
             *conv_config.backward_filter_algo(), *conv_config.conv_desc().id_c(), workspace, *conv_config.backward_filter_workspace_size(),
-            scale.a, *src_desc.id_c(), src_data, *dest_grad_desc.id_c(), dest_grad_data,
-            scale.b, *conv_config.filter_desc().id_c(), filter_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *dest_grad_desc.id_c(), dest_grad_data,
+            unsafe { transmute_copy(&&scale.b) }, *conv_config.filter_desc().id_c(), filter_data
         )
     }
 
@@ -300,12 +347,15 @@ impl Cudnn {
         src_grad_desc: &TensorDescriptor,
         src_grad_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::convolution_backward_data(
             *self.id_c(),
             *conv_config.backward_data_algo(), *conv_config.conv_desc().id_c(), workspace, *conv_config.backward_data_workspace_size(),
-            scale.a, *conv_config.filter_desc().id_c(), filter_data, *dest_grad_desc.id_c(), dest_grad_data,
-            scale.b, *src_grad_desc.id_c(), src_grad_data
+            unsafe { transmute_copy(&&scale.a) },
+            *conv_config.filter_desc().id_c(), filter_data, *dest_grad_desc.id_c(), dest_grad_data,
+            unsafe { transmute_copy(&&scale.b) }, *src_grad_desc.id_c(), src_grad_data
         )
     }
 
@@ -319,11 +369,13 @@ impl Cudnn {
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::softmax_forward(
             *self.id_c(), cudnnSoftmaxAlgorithm_t::CUDNN_SOFTMAX_FAST, cudnnSoftmaxMode_t::CUDNN_SOFTMAX_MODE_INSTANCE,
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -339,11 +391,14 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::softmax_backward(
             *self.id_c(), cudnnSoftmaxAlgorithm_t::CUDNN_SOFTMAX_FAST, cudnnSoftmaxMode_t::CUDNN_SOFTMAX_MODE_INSTANCE,
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_diff_desc.id_c(), dest_diff_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -357,11 +412,13 @@ impl Cudnn {
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::softmax_forward(
             *self.id_c(), cudnnSoftmaxAlgorithm_t::CUDNN_SOFTMAX_LOG, cudnnSoftmaxMode_t::CUDNN_SOFTMAX_MODE_INSTANCE,
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -377,11 +434,14 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::softmax_backward(
             *self.id_c(), cudnnSoftmaxAlgorithm_t::CUDNN_SOFTMAX_LOG, cudnnSoftmaxMode_t::CUDNN_SOFTMAX_MODE_INSTANCE,
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_diff_desc.id_c(), dest_diff_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -396,11 +456,13 @@ impl Cudnn {
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::lrn_cross_channel_forward(
             *self.id_c(), *normalization_conf.lrn_desc().id_c(), CUDNN_LRN_CROSS_CHANNEL_DIM1,
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -419,11 +481,15 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::lrn_cross_channel_backward(
             *self.id_c(), *normalization_conf.lrn_desc().id_c(), CUDNN_LRN_CROSS_CHANNEL_DIM1,
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) },
+            *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -438,11 +504,13 @@ impl Cudnn {
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::pooling_forward(
             *self.id_c(), *pooling_conf.pooling_avg_desc().id_c(),
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -461,11 +529,15 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::pooling_backward(
             *self.id_c(), *pooling_conf.pooling_avg_desc().id_c(),
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) },
+            *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 
@@ -480,11 +552,13 @@ impl Cudnn {
         dest_desc: &TensorDescriptor,
         dest_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::pooling_forward(
             *self.id_c(), *pooling_conf.pooling_max_desc().id_c(),
-            scale.a, *src_desc.id_c(), src_data,
-            scale.b, *dest_desc.id_c(), dest_data
+            unsafe { transmute_copy(&&scale.a) }, *src_desc.id_c(), src_data,
+            unsafe { transmute_copy(&&scale.b) }, *dest_desc.id_c(), dest_data
         )
     }
 
@@ -503,11 +577,15 @@ impl Cudnn {
         dest_diff_desc: &TensorDescriptor,
         dest_diff_data: *mut ::libc::c_void,
         scale: ScalParams<T>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Error>
+        where T: Float + DataTypeInfo,
+    {
         API::pooling_backward(
             *self.id_c(), *pooling_conf.pooling_max_desc().id_c(),
-            scale.a, *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
-            scale.b, *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
+            unsafe { transmute_copy(&&scale.a) },
+            *src_desc.id_c(), src_data, *src_diff_desc.id_c(), src_diff_data,
+            unsafe { transmute_copy(&&scale.b) },
+            *dest_desc.id_c(), dest_data, *dest_diff_desc.id_c(), dest_diff_data
         )
     }
 }

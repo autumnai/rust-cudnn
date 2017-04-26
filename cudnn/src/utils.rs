@@ -1,7 +1,8 @@
 //! Describes utility functionality for CUDA cuDNN.
-use super::{ConvolutionDescriptor, NormalizationDescriptor, FilterDescriptor, PoolingDescriptor};
+use super::{ConvolutionDescriptor, NormalizationDescriptor, FilterDescriptor, PoolingDescriptor, ActivationDescriptor};
 use ffi::*;
-use std::marker::PhantomData;
+
+use num::traits::*;
 
 #[derive(Debug, Copy, Clone)]
 /// Defines the available data types for the CUDA cuDNN data representation.
@@ -13,6 +14,23 @@ pub enum DataType {
     /// F16 (no native Rust support yet)
     Half,
 }
+
+/// CuDnn type info for generic use.
+pub trait DataTypeInfo {
+    /// Mostly internal.
+    fn cudnn_data_type() -> DataType;
+}
+impl DataTypeInfo for f32 {
+    fn cudnn_data_type() -> DataType {
+        DataType::Float
+    }
+}
+impl DataTypeInfo for f64 {
+    fn cudnn_data_type() -> DataType {
+        DataType::Double
+    }
+}
+// TODO f16
 
 #[allow(missing_debug_implementations, missing_copy_implementations)]
 /// Provides a convenient interface to access cuDNN's convolution parameters,
@@ -163,6 +181,51 @@ impl PoolingConfig {
 }
 
 #[allow(missing_debug_implementations, missing_copy_implementations)]
+/// Provides a convenient interface to access cuDNN's Activation Descriptor.
+///
+/// You woudn't use this struct yourself, but rather obtain it through `Cudnn.init_activation()`.
+pub struct ActivationConfig {
+    activation_sigmoid_desc: ActivationDescriptor,
+    activation_relu_desc: ActivationDescriptor,
+    activation_clipped_relu_desc: ActivationDescriptor,
+    activation_tanh_desc: ActivationDescriptor,
+}
+
+impl ActivationConfig {
+    /// Returns a new ActivationConfig.
+    pub fn new(
+        activation_sigmoid_desc: ActivationDescriptor,
+        activation_relu_desc: ActivationDescriptor,
+        activation_clipped_relu_desc: ActivationDescriptor,
+        activation_tanh_desc: ActivationDescriptor,
+    ) -> ActivationConfig {
+        ActivationConfig {
+            activation_sigmoid_desc: activation_sigmoid_desc,
+            activation_relu_desc: activation_relu_desc,
+            activation_clipped_relu_desc: activation_clipped_relu_desc,
+            activation_tanh_desc: activation_tanh_desc,
+        }
+    }
+
+    /// Returns `activation_sigmoid_desc`.
+    pub fn activation_sigmoid_desc(&self) -> &ActivationDescriptor {
+        &self.activation_sigmoid_desc
+    }
+    /// Returns `activation_relu_desc`.
+    pub fn activation_relu_desc(&self) -> &ActivationDescriptor {
+        &self.activation_relu_desc
+    }
+    /// Returns `activation_clipped_relu_desc`.
+    pub fn activation_clipped_relu_desc(&self) -> &ActivationDescriptor {
+        &self.activation_clipped_relu_desc
+    }
+    /// Returns `activation_tanh_desc`.
+    pub fn activation_tanh_desc(&self) -> &ActivationDescriptor {
+        &self.activation_tanh_desc
+    }
+}
+
+#[allow(missing_debug_implementations, missing_copy_implementations)]
 /// Provides a convenient interface for cuDNN's scaling parameters `alpha` and `beta`.
 ///
 /// Scaling paramarters lend the source value with prior value in the destination
@@ -173,36 +236,23 @@ impl PoolingConfig {
 ///
 /// For improved performance it is advised to use beta[0] = 0.0. Use a non-zero value for
 /// beta[0] only when blending with prior values stored in the output tensor is needed.
-pub struct ScalParams<T> {
+pub struct ScalParams<T>
+    where T: Float + DataTypeInfo,
+{
     /// Alpha
-    pub a: *const ::libc::c_void,
+    pub a: T,
     /// Beta
-    pub b: *const ::libc::c_void,
-    scal_type: PhantomData<T>,
+    pub b: T,
 }
 
-impl Default for ScalParams<f32> {
+impl<T> Default for ScalParams<T>
+    where T: Float + Zero + One + DataTypeInfo,
+{
     /// Provides default values for ScalParams<f32>.
-    fn default() -> ScalParams<f32> {
-        let alpha_ptr: *const ::libc::c_void = *&[1.0f32].as_ptr() as *const ::libc::c_void;
-        let beta_ptr: *const ::libc::c_void = *&[0.0f32].as_ptr() as *const ::libc::c_void;
+    fn default() -> ScalParams<T> {
         ScalParams {
-            a: alpha_ptr,
-            b: beta_ptr,
-            scal_type: PhantomData,
-        }
-    }
-}
-
-impl Default for ScalParams<f64> {
-    /// Provides default values for ScalParams<f64>.
-    fn default() -> ScalParams<f64> {
-        let alpha_ptr: *const ::libc::c_void = *&[1.0f64].as_ptr() as *const ::libc::c_void;
-        let beta_ptr: *const ::libc::c_void = *&[0.0f64].as_ptr() as *const ::libc::c_void;
-        ScalParams {
-            a: alpha_ptr,
-            b: beta_ptr,
-            scal_type: PhantomData,
+            a: One::one(),
+            b: Zero::zero(),
         }
     }
 }
