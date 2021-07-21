@@ -46,7 +46,7 @@ extern crate libc;
 use cudnn::{Cudnn, TensorDescriptor};
 use cudnn::utils::{ScalParams, DataType};
 fn main() {
-    // Initialize a new cuDNN context and allocates resources.
+    // Initializes a new cuDNN context and allocates resources.
     let cudnn = Cudnn::new().unwrap();
     // Create a cuDNN Tensor Descriptor for `src` and `dest` memory.
     let src_desc = TensorDescriptor::new(&[2, 2, 2], &[4, 2, 1], DataType::Float).unwrap();
